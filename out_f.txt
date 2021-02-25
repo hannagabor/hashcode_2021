@@ -1,4 +1,4 @@
-1662
+1641
 0
 1
 cd-a 1
@@ -454,8 +454,6 @@ dbf-hc 2
 ejc-hc 3
 cif-hc 1
 gg-hc 1
-73
-0
 74
 7
 gij-he 1
@@ -4321,8 +4319,6 @@ cab-ggh 1
 cgh-ggi 5
 bfc-ggi 2
 cbc-ggi 1
-669
-0
 670
 4
 ifc-gha 3
@@ -5744,8 +5740,6 @@ gih-jci 11
 fch-jci 1
 fb-jci 1
 hhe-jci 1
-929
-0
 930
 3
 bdig-jda 51
@@ -5776,8 +5770,6 @@ ha-jde 1
 bcjb-jde 1
 bdgi-jde 1
 bie-jde 1
-935
-0
 936
 7
 bhb-jdg 2
@@ -5950,8 +5942,6 @@ jcb-jgh 1
 2
 iae-jgi 24
 gjf-jgi 1
-969
-0
 970
 4
 ghd-jha 5
@@ -6647,8 +6637,6 @@ babb-bbba 1
 1111
 1
 hed-bbbb 1
-1112
-0
 1113
 4
 bbh-bbbd 1
@@ -6952,8 +6940,6 @@ fh-bbhe 1
 dia-bbhf 26
 baif-bbhf 1
 bfec-bbhf 1
-1176
-0
 1177
 2
 beee-bbhh 29
@@ -7273,8 +7259,6 @@ ef-bcej 1
 2
 jfh-bcfa 28
 djh-bcfa 2
-1251
-0
 1252
 1
 cig-bcfc 1
@@ -7406,8 +7390,6 @@ bfgd-bcib 4
 bje-bcib 4
 dde-bcib 2
 bdcc-bcib 1
-1282
-0
 1283
 1
 bede-bcid 1
@@ -7522,8 +7504,6 @@ jeh-bdbb 1
 1312
 1
 bcgf-bdbc 1
-1313
-0
 1314
 1
 hh-bdbe 1
@@ -7591,8 +7571,6 @@ bebj-bdda 2
 1331
 1
 bbbg-bddb 1
-1332
-0
 1333
 2
 bcbf-bddd 2
@@ -7863,8 +7841,6 @@ bcfj-beaa 1
 2
 baai-beab 1
 bdde-beab 2
-1402
-0
 1403
 2
 bib-bead 18
@@ -7999,8 +7975,6 @@ iib-bedi 10
 1439
 1
 igd-bedj 2
-1440
-0
 1441
 2
 hcf-beeb 10
@@ -8063,8 +8037,6 @@ bah-befg 5
 1457
 1
 heh-befh 1
-1458
-0
 1459
 1
 bdgc-befj 5
@@ -8085,8 +8057,6 @@ bdgi-begd 12
 2
 babb-bege 3
 bdci-bege 1
-1465
-0
 1466
 2
 ifb-begg 8
@@ -8182,8 +8152,6 @@ cid-beja 1
 1491
 1
 bace-bejb 1
-1492
-0
 1493
 1
 badc-bejd 3
@@ -8214,8 +8182,6 @@ bhf-bfaa 2
 1501
 1
 fbi-bfab 1
-1502
-0
 1503
 1
 jhc-bfad 2
@@ -8265,8 +8231,6 @@ efe-bfbf 23
 1516
 1
 hih-bfbg 4
-1517
-0
 1518
 1
 jjc-bfbi 1
@@ -8441,8 +8405,6 @@ bbie-bfgh 1
 bgej-bfgi 18
 fea-bfgi 3
 bgee-bfgi 1
-1569
-0
 1570
 1
 cga-bfha 1
@@ -8496,8 +8458,6 @@ ceh-bfie 1
 2
 dfi-bfif 29
 caa-bfif 2
-1586
-0
 1587
 1
 cif-bfih 10
@@ -8610,8 +8570,6 @@ icd-bgcb 10
 2
 dga-bgcc 9
 bdbe-bgcc 2
-1623
-0
 1624
 1
 bacd-bgce 1
