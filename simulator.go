@@ -122,11 +122,13 @@ func ReadSolution(p string, I int, streets map[string]int) (schedule [][]GreenLi
 	return
 }
 
-func main() {
-	D, I, S, F, V, _, _, L, _, streets, path := ReadProblem(os.Args[1])
-	//log.Printf("%v %v %v %v %v %v %v %v %v %v", D, I, S, F, V, L, path)
-	schedule := ReadSolution(os.Args[2], I, streets)
-	//log.Printf("%v", schedule)
+func Simulate(
+	D, I, S, F, V int,
+	E, L []int,
+	streets map[string]int,
+	path [][]int,
+	schedule [][]GreenLight) (
+	score int, iTotalWait, sTotalWait []int) {
 
 	step := make([]int, V, V)      // Index of street the car is on in its path.
 	togo := make([]int, V, V)      // How much longer it has to drive straight.
@@ -136,7 +138,9 @@ func main() {
 		waiting[p[0]] = append(waiting[p[0]], v)
 	}
 	t := 0
-	score := 0
+	score = 0
+	iTotalWait = make([]int, I, I) // How much time is spent waiting here.
+	sTotalWait = make([]int, S, S) // How much time is spent waiting here.
 	for t < D {
 		// Drive on a straight line.
 		for v := 0; v < V; v++ {
@@ -165,6 +169,36 @@ func main() {
 			}
 		}
 		t++
+		// Stats.
+		for s := 0; s < S; s++ {
+			sTotalWait[s] += len(waiting[s])
+			iTotalWait[E[s]] += len(waiting[s])
+		}
 	}
-	log.Printf("score: %v", score)
+	return
+}
+
+func main() {
+	D, I, S, F, V, _, E, L, _, streets, path := ReadProblem(os.Args[1])
+	//log.Printf("%v %v %v %v %v %v %v %v %v %v", D, I, S, F, V, L, path)
+	schedule := ReadSolution(os.Args[2], I, streets)
+	//log.Printf("%v", schedule)
+	improved := false
+	for x := 0; x < 3; x++ {
+		improved = false
+		score, iTotalWait, sTotalWait := Simulate(D, I, S, F, V, E, L, streets, path, schedule)
+		log.Printf("score: %v", score)
+		for s := 0; s < S; s++ {
+			if sTotalWait[s] > iTotalWait[E[s]]/2 {
+				for g := range schedule[E[s]] {
+					if schedule[E[s]][g].street == s {
+						improved = true
+						schedule[E[s]][g].T++
+                                                break
+					}
+				}
+			}
+		}
+		log.Printf("improved: %v", improved)
+	}
 }
