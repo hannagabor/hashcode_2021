@@ -216,14 +216,28 @@ func main() {
 	baseScore, iTotalWait, sTotalWait := Simulate(D, I, S, F, V, E, L, streets, path, schedule)
 	log.Printf("score: %v", baseScore)
 	improved := false
-	for x := 0; x < 3; x++ {
+	bestScore := baseScore
+	for x := 0; x < 4; x++ {
 		improved = false
 		for s := 0; s < S; s++ {
-			if sTotalWait[s] > iTotalWait[E[s]]/2 {
+			/*
+				if sTotalWait[s] > iTotalWait[E[s]]/2 {
+					for g := range schedule[E[s]] {
+						if schedule[E[s]][g].street == s {
+							improved = true
+							schedule[E[s]][g].T++
+							break
+						}
+					}
+				}
+			*/
+			if sTotalWait[s] < iTotalWait[E[s]]/3 {
 				for g := range schedule[E[s]] {
 					if schedule[E[s]][g].street == s {
 						improved = true
-						schedule[E[s]][g].T++
+						if schedule[E[s]][g].T > 1 {
+							schedule[E[s]][g].T--
+						}
 						break
 					}
 				}
@@ -232,9 +246,12 @@ func main() {
 		score := 0
 		score, iTotalWait, sTotalWait = Simulate(D, I, S, F, V, E, L, streets, path, schedule)
 		log.Printf("score: %v", score)
-		log.Printf("improved: %v", improved)
-		if score > baseScore {
+		if score > bestScore {
 			WriteSchedule(schedule, N, os.Args[2])
+			bestScore = score
+		}
+		if !improved {
+			break
 		}
 	}
 }
