@@ -1,4 +1,4 @@
-// Run with: go run simulator.go
+// Run with: go run simulator.go a.txt out_a.txt
 package main
 
 import (
@@ -80,6 +80,9 @@ func GreenNow(schedule []GreenLight, t int) (street int) {
 	for _, e := range schedule {
 		total += e.T
 	}
+	if total == 0 {
+		return -1
+	}
 	t = t % total
 	total = 0
 	for _, e := range schedule {
@@ -121,10 +124,10 @@ func ReadSolution(p string, I int, streets map[string]int) (schedule [][]GreenLi
 }
 
 func main() {
-	D, I, S, F, V, B, E, L, N, streets, P, path := ReadProblem("a.txt")
-	log.Printf("%v %v %v %v %v %v %v %v %v %v", D, I, S, F, V, B, E, L, N, path)
-	schedule := ReadSolution("out_a.txt", I, streets)
-	log.Printf("%v", schedule)
+	D, I, S, _, V, _, _, L, _, streets, P, path := ReadProblem(os.Args[1])
+	// log.Printf("%v %v %v %v %v %v %v %v %v %v", D, I, S, F, V, B, E, L, N, path)
+	schedule := ReadSolution(os.Args[2], I, streets)
+	// log.Printf("%v", schedule)
 
 	step := make([]int, V, V)      // Index of street the car is on in its path.
 	togo := make([]int, V, V)      // How much longer it has to drive straight.
@@ -152,6 +155,9 @@ func main() {
 		// Cross an intersection.
 		for i := 0; i < I; i++ {
 			g := GreenNow(schedule[i], t)
+			if g < 0 {
+				continue
+			}
 			if len(waiting[g]) > 0 {
 				v := waiting[g][0]
 				waiting[g] = waiting[g][1:]
