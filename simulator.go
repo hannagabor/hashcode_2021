@@ -3,6 +3,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -178,27 +179,53 @@ func Simulate(
 	return
 }
 
+func WriteSchedule(schedule [][]GreenLight, N []string, p string) {
+	file, err := os.Create(p)
+	Check(err)
+	defer file.Close()
+	w := bufio.NewWriter(file)
+	_, err = fmt.Fprintf(w, "%v\n", len(schedule))
+	Check(err)
+	for i, sch := range schedule {
+		_, err = fmt.Fprintf(w, "%v\n", i)
+		Check(err)
+		_, err = fmt.Fprintf(w, "%v\n", len(sch))
+		Check(err)
+		for _, g := range sch {
+			_, err = fmt.Fprintf(w, "%v %v\n", N[g.street], g.T)
+			Check(err)
+		}
+	}
+	Check(w.Flush())
+}
+
 func main() {
-	D, I, S, F, V, _, E, L, _, streets, path := ReadProblem(os.Args[1])
+	D, I, S, F, V, _, E, L, N, streets, path := ReadProblem(os.Args[1])
 	//log.Printf("%v %v %v %v %v %v %v %v %v %v", D, I, S, F, V, L, path)
 	schedule := ReadSolution(os.Args[2], I, streets)
 	//log.Printf("%v", schedule)
+	baseScore, iTotalWait, sTotalWait := Simulate(D, I, S, F, V, E, L, streets, path, schedule)
+	log.Printf("score: %v", baseScore)
 	improved := false
 	for x := 0; x < 3; x++ {
 		improved = false
-		score, iTotalWait, sTotalWait := Simulate(D, I, S, F, V, E, L, streets, path, schedule)
-		log.Printf("score: %v", score)
 		for s := 0; s < S; s++ {
 			if sTotalWait[s] > iTotalWait[E[s]]/2 {
 				for g := range schedule[E[s]] {
 					if schedule[E[s]][g].street == s {
 						improved = true
 						schedule[E[s]][g].T++
-                                                break
+						break
 					}
 				}
 			}
 		}
+		score := 0
+		score, iTotalWait, sTotalWait = Simulate(D, I, S, F, V, E, L, streets, path, schedule)
+		log.Printf("score: %v", score)
 		log.Printf("improved: %v", improved)
+		if score > baseScore {
+			WriteSchedule(schedule, N, os.Args[2])
+		}
 	}
 }
