@@ -21,7 +21,7 @@ func Scan(scanner *bufio.Scanner) {
 	}
 }
 
-func ReadProblem(p string) (D, I, S, F, V int, B, E, L []int, N []string, streets map[string]int, P []int, path [][]int) {
+func ReadProblem(p string) (D, I, S, F, V int, B, E, L []int, N []string, streets map[string]int, path [][]int) {
 	file, err := os.Open(p)
 	Check(err)
 	defer file.Close()
@@ -55,15 +55,14 @@ func ReadProblem(p string) (D, I, S, F, V int, B, E, L []int, N []string, street
 		L[i], err = strconv.Atoi(BENL[3])
 		Check(err)
 	}
-	P = make([]int, V, V)
 	path = make([][]int, V, V)
 	for i := 0; i < V; i++ {
 		Scan(scanner)
 		line := strings.Split(scanner.Text(), " ")
-		P[i], err = strconv.Atoi(line[0])
+		P, err := strconv.Atoi(line[0])
 		Check(err)
-		path[i] = make([]int, P[i], P[i])
-		for j := 0; j < P[i]; j++ {
+		path[i] = make([]int, P, P)
+		for j := 0; j < P; j++ {
 			path[i][j] = streets[line[j+1]]
 		}
 	}
@@ -124,10 +123,10 @@ func ReadSolution(p string, I int, streets map[string]int) (schedule [][]GreenLi
 }
 
 func main() {
-	D, I, S, _, V, _, _, L, _, streets, P, path := ReadProblem(os.Args[1])
-	// log.Printf("%v %v %v %v %v %v %v %v %v %v", D, I, S, F, V, B, E, L, N, path)
+	D, I, S, F, V, _, _, L, _, streets, path := ReadProblem(os.Args[1])
+	//log.Printf("%v %v %v %v %v %v %v %v %v %v", D, I, S, F, V, L, path)
 	schedule := ReadSolution(os.Args[2], I, streets)
-	// log.Printf("%v", schedule)
+	//log.Printf("%v", schedule)
 
 	step := make([]int, V, V)      // Index of street the car is on in its path.
 	togo := make([]int, V, V)      // How much longer it has to drive straight.
@@ -145,7 +144,7 @@ func main() {
 				togo[v] -= 1
 				if togo[v] == 0 {
 					if step[v] == len(path[v])-1 {
-						score += P[v] + D - t
+						score += F + D - t
 					} else {
 						waiting[path[v][step[v]]] = append(waiting[path[v][step[v]]], v)
 					}
