@@ -184,9 +184,18 @@ func WriteSchedule(schedule [][]GreenLight, N []string, p string) {
 	Check(err)
 	defer file.Close()
 	w := bufio.NewWriter(file)
-	_, err = fmt.Fprintf(w, "%v\n", len(schedule))
+	empties := 0
+	for _, sch := range schedule {
+		if len(sch) == 0 {
+			empties++
+		}
+	}
+	_, err = fmt.Fprintf(w, "%v\n", len(schedule)-empties)
 	Check(err)
 	for i, sch := range schedule {
+		if len(sch) == 0 {
+			continue
+		}
 		_, err = fmt.Fprintf(w, "%v\n", i)
 		Check(err)
 		_, err = fmt.Fprintf(w, "%v\n", len(sch))
